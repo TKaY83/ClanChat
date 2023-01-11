@@ -1,0 +1,20 @@
+<div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>User Name</mat-label>
+           
+            <div class="list of user who match search">
+                <div *ngFor="let user of searchMatchesUsers">
+                    <div class="user-filter" [routerLink]="['chat-main']" (click)="checkIfUserHasChat(user.uid)" *ngIf="userIsNotMyself(user)">
+                        <div #userImage class="user-img">
+                            <img src="{{userService.returnUsersPhotoUrl(user.uid) ? userService.returnUsersPhotoUrl(user.uid) : userUnkown}}">
+                            {{userService.returnUsersDisplayName(user.uid)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input (keyup)="searchForMatch()" matInput [(ngModel)]="name">
+        </mat-form-field>
+    </div>
+    <button class="dialog-button" mat-dialog-close>Cancel</button>
+</div>

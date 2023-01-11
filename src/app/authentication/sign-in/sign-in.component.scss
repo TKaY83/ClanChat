@@ -1,0 +1,27 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: rgb(0, 0, 0) !important;
+}
+
+
+@media (max-height: 320px){
+    .auth-area-container{
+        width: 100%;
+    }
+
+    .auth-container{
+        flex-direction: row;
+    }
+
+    .mat-form-field{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    .redirectToLogin{
+        margin-top: unset;
+    }
+}

@@ -1,0 +1,43 @@
+<div class="header-top">
+    <div *ngIf="actualUser.emailVerified" class="icon-header-home admin-mode">
+        <input matTooltip="You are able to create channels or delete posts" type="checkbox" (click)="adminCheckboxClick()">
+        <div matTooltip="You are able to create channels or delete posts">Admin modus</div>
+    </div>
+    <h3 class="color-white">Slack-Clone</h3>
+    <mat-icon class="icon-header" fontIcon="login" [routerLink]="['sign-in']" *ngIf="!authService.userData as user">
+    </mat-icon>
+    <div class="icon-header-right">
+            <div #userImage class="user-img"  *ngIf="authService.userData as user" (click)="changeDetailViewPageContentToUserInfo()">
+                <img src="{{authService.userData.photoURL ? authService.userData.photoURL : imgUnknownUserWhite}}">
+            </div>
+        <div>
+            <mat-icon mat-icon-button [matMenuTriggerFor]="color" fontIcon="format_color_fill"
+                *ngIf="authService.userData as user">
+            </mat-icon>
+        </div>
+        <mat-menu #color="matMenu">
+            <button (click)="themePink()" mat-menu-item>Pink</button>
+            <button (click)="themeViolett()" mat-menu-item>Violett</button>
+            <button (click)="themeOrange()" mat-menu-item>Orange</button>
+            <button (click)="themeDarkViolett()" mat-menu-item>DarkViolett</button>
+        </mat-menu>
+        <div>
+            <mat-icon mat-icon-button [matMenuTriggerFor]="menu" fontIcon="settings"
+                *ngIf="authService.userData as user">
+            </mat-icon>
+        </div>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <button (click)="changeDetailViewPageContentToUserInfo()" mat-menu-item>
+                <mat-icon>person</mat-icon>
+                <span>Dein Profil</span>
+            </button>
+            <button mat-menu-item (click)="authService.SignOut()">
+                <mat-icon>logout</mat-icon>
+                <span>Ausloggen</span>
+            </button>
+        </mat-menu>
+    </div>
+
+
+
+</div>

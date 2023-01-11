@@ -1,0 +1,115 @@
+<div *ngIf="channelServ.showChannel" class="main-channel-container">
+    <div class="detail-view-header">
+        <p># <i>{{channelServ.currentChannel.name}}</i></p>
+    </div>
+    <div #scrollMe class="all-posts-container">
+        <div *ngFor="let post of channelServ.posts; let i=index; let last = last" [ngClass]="{'last-child': last}">
+            <div class="post-container" (click)="changeDetailViewPageContentToThread(); saveAnswersToShow(post)">
+                <mat-icon *ngIf="generalService.adminActive" class="menu_vert_icon" mat-icon-button fontIcon="more_vert"
+                    [matMenuTriggerFor]="menuPost">
+                </mat-icon>
+                <mat-menu #menuPost="matMenu" xPosition="before">
+                    <button (click)="deletePost(post)" mat-menu-item>
+                        <mat-icon>delete_forever</mat-icon>
+                        <span>Löschen</span>
+                    </button>
+                </mat-menu>
+                <div #userImage class="post-img">
+                    <div [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"
+                        (mouseenter)="getPosition($event); generalService.mouseEnter(menuTrigger)"
+                        (mouseleave)="generalService.mouseLeave(menuTrigger)">
+                        <img src="{{userService.returnUsersPhotoUrl(post.author)}}" alt="">
+                    </div>
+                </div>
+                <mat-menu #menu="matMenu" xPosition="after" [yPosition]="menuPositionY" [hasBackdrop]="false">
+                    <div (mouseenter)="generalService.mouseEnter(menuTrigger)"
+                        (mouseleave)="generalService.mouseLeave(menuTrigger)">
+                        <app-user-window [uid]="post.author"></app-user-window>
+                    </div>
+                </mat-menu>
+                <div class="post-box">
+                    <div class="name-time-box">
+                        <div class="name">{{userService.returnUsersDisplayName(post.author)}}</div>
+                        <div class="time">{{generalService.getTransformedTimeStampToDate(post.timeStamp)}}</div>
+                    </div>
+                    <div class="image-box">
+                        <div class="content-box" *ngFor="let postImage of post.imageUrl">
+                            <img class="post-img-content" src="{{postImage}}">
+                        </div>
+                    </div>
+                    <div class="content-box" [innerHTML]="post.content"></div>
+                    <div class="answer-box" *ngIf="post.answers.length > 1">
+                        <span class="color-main-with-hover"
+                            (click)="changeDetailViewPageContentToThread(); saveAnswersToShow(post)">{{post.answers.length}}
+                            Antworten</span>
+                    </div>
+                    <div class="answer-box" *ngIf="post.answers.length == 1">
+                        <span class="color-main-with-hover"
+                            (click)="changeDetailViewPageContentToThread(); saveAnswersToShow(post)">{{post.answers.length}}
+                            Antwort</span>
+                    </div>
+                    <div class="answer-box" *ngIf="post.answers.length == 0">
+                        <span class="color-main-with-hover"
+                            (click)="changeDetailViewPageContentToThread(); saveAnswersToShow(post)">Schreibe eine
+                            Antwort</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="expand-more-editor-icon" *ngIf="!messageService.showEditorChannel">
+        <button (click)="messageService.expandEditorChannel()">
+            <mat-icon mat-icon-button fontIcon="expand_less" class="color-main-with-hover"></mat-icon>
+        </button>
+    </div>
+    <div class="writing-area-container" *ngIf="messageService.showEditorChannel">
+        <div class="writing-area" [ngStyle]="{'padding-bottom':(messageService.fileSelected) ? '48px' : '0px'}">
+            <div class="expand-less-editor-icon">
+                <button (click)="messageService.expandEditorChannel()">
+                    <mat-icon mat-icon-button fontIcon="expand_more" class="color-main-with-hover"></mat-icon>
+                </button>
+            </div>
+            <editor class="editor-1" [(ngModel)]="this.messageService.messageChannel" apiKey="0u347b51bx380ihx2w2vws4bfqf9dfqewelzkjxsl7p5ki0a"
+                [init]="{
+                min_height: 178,
+                max_height: 250,
+                width: '100%',
+                menubar: false, 
+                plugins: 'preview emoticons advlist autolink lists link image charmap preview anchor autoresize',
+                toolbar1: 'undo redo | bold italic | emoticons',
+                emoticons_database: 'emojis'
+                }">
+            </editor>
+            <div *ngIf="messageService.fileSelected" class="show-selected-files">
+                <div *ngFor="let filePreview of messageService.filesPreview">
+                    <div class="img-file-preview-box" (mouseover)="filePreview.hidden = false"
+                        (mouseleave)="filePreview.hidden = true">
+                        <img class="img-file-preview" src="{{filePreview.url}}" alt="">
+                        <mat-icon (click)="deleteSelectedFile(filePreview.position)" *ngIf="!filePreview.hidden"
+                            (mouseleave)="filePreview.hidden = true" class="file-preview-cancel-icon">
+                            cancel</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <editor class="editor-2" apiKey="0u347b51bx380ihx2w2vws4bfqf9dfqewelzkjxsl7p5ki0a" [init]="{
+                height: 178,
+                width: '100%',
+                menubar: false,
+                toolbar1: 'undo redo | bold italic | emoticons'
+                 }">
+            </editor>
+            <button class="button" [disabled]="this.messageService.messageChannel.length == 0" (click)="sendMessageChannel()">
+                <mat-icon mat-icon-button fontIcon="send" [ngClass]="this.messageService.messageChannel.length == 0 ? 'color-gray' : 'color-main-with-hover'"></mat-icon>
+            </button>
+            <div class="upload-container">
+                <label for="file-input">
+                    <mat-icon mat-icon-button (click)="messageService.changeActiveEditorToChannel()">attach_file
+                    </mat-icon>
+                </label>
+                <input id="file-input" type="file" class="text-nowrap text-truncate"
+                    (change)="messageService.selectFile($event)" multiple />
+            </div>
+        </div>
+    </div>
+
+</div>

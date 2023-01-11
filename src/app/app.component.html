@@ -1,0 +1,4 @@
+<app-main *ngIf="!authService.showLoginArea && windowWidth >= 800"></app-main>
+<app-authentication *ngIf="authService.showLoginArea"></app-authentication>
+<app-mobil *ngIf="!authService.showLoginArea && windowWidth < 800"></app-mobil>
+<app-loading-circle *ngIf="sendMessageService.uploadRunning"></app-loading-circle>

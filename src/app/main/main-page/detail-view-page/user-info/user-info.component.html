@@ -1,0 +1,105 @@
+<!-- Main content -->
+<div class="user-info-container">
+  <div class="detail-view-header" *ngIf="authService.userData as user">
+    <h2 class="headline-user">Welcome {{ user.displayName }}</h2>
+  </div>
+  <div class="dashboard-container">
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="headline-user-profile color-main fs18">Profile settings
+        <mat-icon *ngIf="!editUser && activeUser.emailVerified" fontIcon="edit" (click)="editProfile()"></mat-icon>
+        <mat-icon *ngIf="editUser" (click)="saveProfileEdit()">save</mat-icon>
+        <mat-icon *ngIf="editUser" (click)="closeProfileEdit()">cancel</mat-icon>
+      </h1>
+    </div>
+    <!-- Show user data when logged in -->
+    <div *ngIf="authService.userData">
+      <div class="img-box" *ngIf="!editUser">
+        <img *ngIf="!editUser" src="{{authService.userData.photoURL ? authService.userData.photoURL : userUnkown}}" alt="">
+      </div>
+      <div>
+        <div class="img-user-box" *ngIf="editUser">
+          <img *ngIf="messageService.fileSelectedUser" (click)="editUserImg = true" src="{{(messageService.filePreviewUser) ? (messageService.filePreviewUser) : 'user-black.png'}}">
+          <button>
+            <label for="file-input">
+              <mat-icon mat-icon-button (click)="messageService.changeActiveEditorToUser()">attach_file
+              </mat-icon>
+            </label>
+            <input id="file-input" type="file" class="user-info-input" (change)="messageService.selectFile($event)" />
+          </button>
+        </div>
+        <div *ngIf="editUserImg" class="swiper-container">
+          <swiper [navigation]="true" [pagination]="true" class="mySwiper">
+            <ng-template swiperSlide *ngFor="let image of images">
+              <div class="img-edit-container">
+                <mat-icon style="color: red;" fontIcon="close" (click)="editUserImg = false"></mat-icon>
+                <div class="img-box">
+                  <img (click)="editUserImg = false" class="profile-img"
+                    src="./../../../assets/img/userIcons/{{image.src}}">
+                </div>
+                <mat-icon style="color: green;" fontIcon="check"
+                  (click)="saveImgUserPhotoURL(image.src); authService.changeUserDataImg(image.src); editUserImg = false">
+                </mat-icon>
+              </div>
+            </ng-template>
+          </swiper>
+        </div>
+        <div class="user-detail-container">
+          <div class="user-detail-box">
+            <p><strong>Name:</strong> <span *ngIf="!editUser"> {{(usersService.returnUsersDisplayName(activeUser.uid)) ?
+                usersService.returnUsersDisplayName(activeUser.uid) :
+                'User'}}</span></p>
+            <mat-form-field appearance="fill" *ngIf="editUser">
+              <input [(ngModel)]="activeUser.displayName" matInput type="text" value="{{activeUser.displayName}}"
+                required maxLength="10">
+              <mat-error *ngIf="authService.name.invalid">{{authService.getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="user-detail-box">
+            <p><strong>UserId:</strong> <span> {{(activeUser.uid) ? activeUser.uid : 'uid'}}</span></p>
+          </div>
+          <div class="user-detail-box">
+            <p><strong>Telefon:</strong> <span *ngIf="!editUser">
+                {{usersService.returnUsersPhoneNumber(activeUser.uid)}}</span></p>
+            <mat-form-field appearance="fill" *ngIf="editUser">
+              <input [(ngModel)]="activeUser.phoneNumber" matInput value="{{activeUser.phoneNumber}}" required>
+              <mat-error *ngIf="authService.phone.invalid">{{authService.getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="user-detail-box">
+            <p><strong>E-Mail verified:</strong> <span> {{(activeUser.emailVerified) ? activeUser.emailVerified :
+                'false'}}</span></p>
+          </div>
+          <!-- Verified user -->
+          <h1 *ngIf="activeUser.emailVerified" class="headline-user-profile color-main fs18">More settings
+            <mat-icon *ngIf="!editUserSensitive" fontIcon="edit" (click)="editUserSensitive = !editUserSensitive">
+            </mat-icon>
+            <mat-icon *ngIf="editUserSensitive" (click)="profileEditSensitiveInfos()">save</mat-icon>
+            <mat-icon *ngIf="editUserSensitive" (click)="closeMoreSettings()">cancel</mat-icon>
+          </h1>
+          <div *ngIf="activeUser.emailVerified" class="user-detail-box">
+            <p><strong>E-Mail:</strong><span *ngIf="!editUserSensitive"> {{(activeUser.email) ? activeUser.email :
+                'E-Mail'}}</span></p>
+            <mat-form-field appearance="fill" *ngIf="editUserSensitive">
+              <input [(ngModel)]="activeUser.email" matInput [formControl]="authService.email" type="email"
+                value="{{activeUser.email}}" required>
+              <mat-error *ngIf="authService.email.invalid">{{authService.getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div *ngIf="activeUser.emailVerified" class="user-detail-box">
+            <div>
+              <p><strong>Passwort:</strong> <span *ngIf="!editUserSensitive"> **********</span></p>
+            </div>
+            <div>
+              <mat-form-field appearance="fill" *ngIf="editUserSensitive">
+                <input [(ngModel)]="newPasswort" matInput (click)="checkIfPasswordChanged = true"
+                  [formControl]="authService.password" type="password" placeholder="**********" required
+                  matTooltip="You will logged out, in case of change password" [matTooltipPosition]="position.value!">
+                <mat-error *ngIf="authService.password.invalid && checkIfPasswordChanged">
+                  {{authService.getErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

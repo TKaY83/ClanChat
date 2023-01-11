@@ -1,0 +1,35 @@
+<div class="mobil-container" (mouseover)="userIsStillActive()">
+    <div>
+        <app-header></app-header>
+    </div>
+    <div class="mobil-sub-container">
+        <div class="swiper-container-mobil">
+            <swiper #swiper [navigation]="true" class="mySwiper">
+                <ng-template swiperSlide>
+                    <div class="sidebar-app-container-mobil">
+                        <app-sidebar></app-sidebar>
+                    </div>
+                </ng-template>
+                <ng-template swiperSlide>
+                    <router-outlet></router-outlet>
+                </ng-template>
+                <ng-template swiperSlide>
+                    <div *ngIf="showDetailViewPageMobil" class="detail-view-app-container-mobil">
+                        <app-detail-view-page></app-detail-view-page>
+                    </div>
+                </ng-template>
+            </swiper>
+            <div *ngIf="checkShowNextSlide()"></div>
+        </div>
+        <div class="w100">
+            <app-footer></app-footer>
+        </div>
+    </div>
+    <div class="icon-swipe-container" *ngIf="showNavigationIconSwipe" (click)="showNavigationIconSwipe = false">
+        <div>
+            <mat-icon fontIcon="swipe">
+            </mat-icon>
+            <span>Swipe for navigation</span>
+        </div>
+    </div>
+</div>

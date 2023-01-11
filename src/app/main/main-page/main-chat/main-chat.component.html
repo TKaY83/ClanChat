@@ -1,0 +1,89 @@
+<div class="main-chat-container">
+    <div class="detail-view-header">
+        <p><i>Private Chat</i></p>
+    </div>
+    <div class="chat-main-area-box">
+        <div *ngIf="!chatService.showChat"></div>
+        <div class="chat-main-area-box">
+            <div *ngIf="chatService.showChat" class="chat-container all-posts-container" #scrollMe>
+                <div *ngFor="let text of chatService.messages" class="chat-friend-box">
+                    <div class="post-container">
+                        <div class="post-img">
+                            <img src="{{usersService.returnUsersPhotoUrl(text.author) ? usersService.returnUsersPhotoUrl(text.author): userUnkown}}">
+                        </div>
+                        <div class="post-box">
+                            <div class="name-time-box">
+                                <div class="name">{{usersService.returnUsersDisplayName(text.author)}}</div>
+                                <div class="time">{{generalService.getTransformedTimeStampToDate(text.timeStamp)}}</div>
+                            </div>
+                            <div class="image-box">
+                                <div class="content-box" *ngFor="let textImage of text.imageUrl">
+                                    <img src="{{textImage}}" alt="">
+                                </div>
+                            </div>
+                            <div class="content-box" [innerHTML]="text.content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="expand-more-editor-icon" *ngIf="!messageService.showEditorChat">
+                <button (click)="messageService.expandEditorChat()">
+                    <mat-icon mat-icon-button fontIcon="expand_less" class="color-main-with-hover"></mat-icon>
+                </button>
+            </div>
+            <div class="writing-area-container" *ngIf="messageService.showEditorChat">
+                <div class="writing-area"
+                    [ngStyle]="{'padding-bottom':(messageService.fileSelectedChat) ? '48px' : '0px'}">
+                    <div class="expand-less-editor-icon">
+                        <button (click)="messageService.expandEditorChat()">
+                            <mat-icon mat-icon-button fontIcon="expand_more" class="color-main-with-hover"></mat-icon>
+                        </button>
+                    </div>
+                    <editor class="editor-1" [(ngModel)]="messageService.messageChat"
+                        apiKey="0u347b51bx380ihx2w2vws4bfqf9dfqewelzkjxsl7p5ki0a" [init]="{
+                    height: 178,
+                    width: '100%',
+                    menubar: false, 
+                    plugins: 'preview emoticons advlist autolink lists link image charmap preview anchor autoresize',
+                    toolbar1: 'undo redo | bold italic | emoticons',
+                    emoticons_database: 'emojis'
+                    }">
+                    </editor>
+                    <div *ngIf="messageService.fileSelectedChat" class="show-selected-files">
+                        <div *ngFor="let filePreview of messageService.filesPreviewChat">
+                            <div class="img-file-preview-box" (mouseover)="filePreview.hidden = false"
+                                (mouseleave)="filePreview.hidden = true">
+                                <img class="img-file-preview" src="{{filePreview.url}}" alt="">
+                                <mat-icon (click)="deleteSelectedFile(filePreview.position)" *ngIf="!filePreview.hidden"
+                                    (mouseleave)="filePreview.hidden = true" class="file-preview-cancel-icon">
+                                    cancel</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <editor class="editor-2" apiKey="0u347b51bx380ihx2w2vws4bfqf9dfqewelzkjxsl7p5ki0a" [init]="{
+                    height: 178,
+                    width: '100%',
+                    menubar: false,
+                    toolbar1: 'undo redo | bold italic | emoticons'
+                     }">
+                    </editor>
+                    <button class="button" [disabled]="messageService.messageChat.length == 0"
+                        (click)="sendMessageChat()">
+                        <mat-icon mat-icon-button fontIcon="send"
+                            [ngClass]="messageService.messageChat.length == 0 ? 'color-gray' : 'color-main-with-hover'"></mat-icon>
+                    </button>
+                    <div class="upload-container">
+                        <label for="file-input">
+                            <mat-icon mat-icon-button (click)="messageService.changeActiveEditorToChat()">attach_file
+                            </mat-icon>
+                        </label>
+                        <input id="file-input" type="file" class="text-nowrap text-truncate"
+                            (change)="messageService.selectFile($event)" multiple />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,48 @@
+.main-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.main-page-box {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.side-nav-icon-box {
+    position: absolute;
+}
+
+.main-sub-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100vh - 60px - 40px);
+}
+
+.w100 {
+    width: 100%;
+}
+
+.detail-view-head-container {
+    width: 370px;
+    height: calc(100vh - 100px);
+    position: relative;
+}
+
+.sidebar-app-container{
+    overflow-y: auto;
+    min-width: 180px;
+}
+
+.close-icon-detail-view{
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    z-index: 50;
+
+    &:hover{
+        border: 1px solid black;
+        border-radius: 4px;
+    }
+}

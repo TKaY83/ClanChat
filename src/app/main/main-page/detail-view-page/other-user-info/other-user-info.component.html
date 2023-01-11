@@ -1,0 +1,25 @@
+<div class="detail-view-header"> <h2 class="headline-user">Profile</h2> </div>
+<div class="dashboard-container">
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="headline-user color-main fs18">User Profile</h1>
+    </div>
+    <!-- Show user data when logged in -->
+    <div class="img-box">
+        <img src="{{userService.returnUsersPhotoUrl(detailViewService.userToShow) ? userService.returnUsersPhotoUrl(detailViewService.userToShow) :userUnkown}}" alt="">
+    </div>
+
+    <div class="user-detail-container">
+        <div class="user-detail-box">
+            <p>Name: <strong>{{(userService.returnUsersDisplayName(detailViewService.userToShow)) ?
+                    userService.returnUsersDisplayName(detailViewService.userToShow) : 'User'}}</strong></p>
+        </div>
+        <div class="user-detail-box">
+            <p>E-Mail: <strong>{{(userService.returnUsersMail(detailViewService.userToShow)) ?
+                    userService.returnUsersMail(detailViewService.userToShow) : 'E-Mail'}}</strong></p>
+        </div>
+        <div class="user-detail-box">
+            <p>Telefon: <strong>{{(userService.returnUsersPhoneNumber(detailViewService.userToShow)) ?
+                    userService.returnUsersPhoneNumber(detailViewService.userToShow) : 'Phone'}}</strong></p>
+        </div>
+    </div>
+</div>

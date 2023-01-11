@@ -1,0 +1,20 @@
+<div class="padding-8 show-user-details">
+    <div #userImage class="post-img">
+        <img (click)="showUserDetails()" src="{{userService.returnUsersPhotoUrl(uid) ? userService.returnUsersPhotoUrl(uid) : userUnkown}}">
+    </div>
+
+    <div class="show-user-details">
+        <span>{{userService.returnUsersDisplayName(uid)}}</span>
+        <div class="status-field"
+            [ngStyle]="{'background-color': (this.userService.returnUserStatus(uid)) ? (this.userService.returnUserStatus(uid)) : 'gray'}">
+        </div>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div class="padding-8 show-user-details-btn-box">
+    <button class="dialog-button" (click)="checkIfUserHasChat(uid)">Nachricht</button>
+    <button class="dialog-button">
+        <a (click)="checkIfNbrExist(uid)" class="tel-link"
+            href="tel:+{{userService.returnUsersPhoneNumber(uid)}}">Anrufen</a>
+    </button>
+</div>

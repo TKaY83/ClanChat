@@ -1,0 +1,23 @@
+<div class="exp-box">
+    <mat-accordion class="exp-box bg-c-1-light">
+        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="expansion-title">
+                        <span>Chats</span>
+                        <mat-icon fontIcon="add" (click)="openDialog('200ms', '100ms')"></mat-icon>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngIf="chatService.showChatsWithFriends" class="chat-friend-container">
+                <div [routerLink]="['chat-main']" *ngFor="let user of chatService.arrayOfFriendsWithChatUid"
+                    class="chat-friend-box" (click)="saveCurrentChatId(user.id)">
+                    <div #userImage class="user-img">
+                        <img src="{{usersService.returnUsersPhotoUrl(user.author) ? usersService.returnUsersPhotoUrl(user.author) : userUnkown}}">
+                    </div>
+                    <p class="user-name">{{usersService.returnUsersDisplayName(user.author)}}</p>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

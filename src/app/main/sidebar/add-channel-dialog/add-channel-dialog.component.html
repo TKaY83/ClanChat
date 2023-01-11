@@ -1,0 +1,10 @@
+<div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Channel Name</mat-label>
+            <input matInput [(ngModel)]="name">
+        </mat-form-field>
+    </div>
+    <button class="dialog-button" (click)="createNewChannel()">Hinzufügen</button>
+    <button class="dialog-button" mat-dialog-close>Cancel</button>
+</div>

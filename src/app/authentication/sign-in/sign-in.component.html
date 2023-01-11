@@ -1,0 +1,50 @@
+<div>
+    <div class="bg-c-1 auth-area-bg-container"></div>
+    <div class="bg-c-1-light auth-area-container">
+        <div class="authBlock">
+            <h3 class="color-main fs18">Sign In</h3>
+            <form ngNativeValidate #myForm>
+                <div class="auth-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label class="contact-label">Enter your E-Mail</mat-label>
+                        <input class="contact-input-element" name="mail" #userEmail matInput
+                            [formControl]="authService.email" type="email" id="mail" placeholder="Your@email.com"
+                            required>
+                        <mat-error *ngIf="authService.email.invalid">{{authService.getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label class="contact-label">Enter your Password</mat-label>
+                        <input [formControl]="authService.password" type="password" name="password" #userPwd matInput
+                            placeholder="Password" required>
+                        <mat-error *ngIf="authService.password.invalid">{{authService.getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+            <!-- Calling SignIn Api from AuthService -->
+            <div class="formGroup">
+                <input type="button" class="btn-auth bg-c-2 color-white margin-bottom-8" value="Log in"
+                    (click)="authService.SignIn(userEmail.value, userPwd.value)">
+            </div>
+            <div class="formGroup">
+                <input type="button" class="btn-auth bg-c-2 color-white" value="Log in as GUEST"
+                    (click)="authService.signInAnonymously()">
+            </div>
+            <div class="formGroup">
+                <span class="or"><span class="orInner">Or</span></span>
+            </div>
+            <!-- Calling GoogleAuth Api from AuthService -->
+            <div class="google-btn-box">
+                <img src="./../../../assets/img/google_icon.svg" alt="">
+                <button type="button" class="color-white bg-c-2" (click)="authService.GoogleAuth()">
+                    Log in with Google
+                </button>
+            </div>
+            <div class="color-main-with-hover">
+                <span (click)="goToForgotPassword()">Forgot Password?</span>
+            </div>
+        </div>
+        <div class="redirectToLogin">
+            <span>Don't have an account?<span class="color-main-with-hover" (click)="goToSignUp()"> Sign Up</span></span>
+        </div>
+    </div>
+</div>
