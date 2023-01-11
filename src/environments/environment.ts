@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyCZfMK6Pw8XUgYoP-AP4pCLpBhiSOknX-w",
-    authDomain: "slack-clone-a06c2.firebaseapp.com",
-    projectId: "slack-clone-a06c2",
-    storageBucket: "slack-clone-a06c2.appspot.com",
-    messagingSenderId: "98882258716",
-    appId: "1:98882258716:web:5fb0d544408fbd2511dcd9"
+    apiKey: "AIzaSyDgLvNJ2t39fl805mGaeJnUBMOK8UdVnPM",
+    authDomain: "clanchat-259bd.firebaseapp.com",
+    projectId: "clanchat-259bd",
+    storageBucket: "clanchat-259bd.appspot.com",
+    messagingSenderId: "872118484583",
+    appId: "1:872118484583:web:8f024a7dfaba4b240c5ec2"
   },
-  tinyMceApiKey: '0u347b51bx380ihx2w2vws4bfqf9dfqewelzkjxsl7p5ki0a'
+  tinyMceApiKey: 'dqovzgqhgdx9jk5mn5uimf6ma1d19rchcrdlwa3hws76yxbl'
 };
 
 /*
