@@ -118,6 +118,8 @@ export class AuthService {
   // Sign in with Google
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
+      location.reload();
+
     });
   }
 
@@ -267,7 +269,7 @@ export class AuthService {
         .doc(this.userData.uid)
         .update({ isOnline: false })
         .then(() => {
-        }).catch((error) => {});
+        }).catch((error) => { });
     }
   }
 
