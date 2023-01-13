@@ -116,10 +116,9 @@ export class AuthService {
   }
 
   // Sign in with Google
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-      location.reload();
-
+  async GoogleAuth() {
+    return await this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
+        location.reload();
     });
   }
 
